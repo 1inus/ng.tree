@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>iconing 图标demo</title>
+<link rel='stylesheet' href='style.css' />
+<link rel='stylesheet' href='demo.css' />
+<style id='freshstyle'></style>
+</head>
+<body>
+<header>
+	<div class='headerwraper header'>
+		<div class='headerleft'>
+			<h1 class='logo'>iconing</h1>
+		</div>
+		<div class='headerright'></div>
+	</div>
+</header>
+<div class='maincontent'>
+	<div class='iconsheader header'>
+		<h2>SVG彩色动画图标(共5个图标)</h2>
+		<div class='operation'>
+			<label><input type='radio' name='bgType' onclick='bgType(this)' checked='checked' value='svg'/><span>svg</span></label>
+			<label><input type='radio' name='bgType' onclick='bgType(this)' value='png'/><span>png</span></label>&nbsp;&nbsp;&nbsp;
+			<span>尺寸 : </span>
+			<input max='198' min='14' value='30' type='range' oninput='fontSize(this);' onchange='fontSize(this);'/>
+			<span id='fontsize'>30</span><soan>px</soan>
+			<div class='colors' onclick='bgCol(event)'>
+					<i style='background:#fff;'></i>
+				<i style='background:#ECF0F1;'></i>
+				<i style='background:#2980B9;'></i>
+				<i style='background:#27AE60;'></i>
+			</div>
+		</div>
+	</div>
+	<ul>
+		<li><div class='iconwraper'><div class='icon icon_tree_node_conect_1'>tree_node_conect_1</div><div class='selector'>icon_tree_node_conect_1</div></div></li>
+		<li><div class='iconwraper'><div class='icon icon_tree_node_conect_2'>tree_node_conect_2</div><div class='selector'>icon_tree_node_conect_2</div></div></li>
+		<li><div class='iconwraper'><div class='icon icon_tree_node_conect_3'>tree_node_conect_3</div><div class='selector'>icon_tree_node_conect_3</div></div></li>
+		<li><div class='iconwraper'><div class='icon icon_tree_node_conect_4'>tree_node_conect_4</div><div class='selector'>icon_tree_node_conect_4</div></div></li>
+		<li><div class='iconwraper'><div class='icon icon_tree_node_conect_5'>tree_node_conect_5</div><div class='selector'>icon_tree_node_conect_5</div></div></li>
+		<li><div class='iconwraper'><div class='icon icon_tree_node_conect_6'>tree_node_conect_6</div><div class='selector'>icon_tree_node_conect_6</div></div></li>
+		<li><div class='iconwraper'><div class='icon icon_tree_node_conect_7'>tree_node_conect_7</div><div class='selector'>icon_tree_node_conect_7</div></div></li>
+		<li><div class='iconwraper'><div class='icon icon_tree_node_conect_8'>tree_node_conect_8</div><div class='selector'>icon_tree_node_conect_8</div></div></li>
+		<li><div class='iconwraper'><div class='icon icon_tree_node_conect_9'>tree_node_conect_9</div><div class='selector'>icon_tree_node_conect_9</div></div></li>
+		<li><div class='iconwraper'><div class='icon icon_tree_node_conect_10'>tree_node_conect_10</div><div class='selector'>icon_tree_node_conect_10</div></div></li>
+		<li><div class='iconwraper'><div class='icon icon_tree_node_conect'>tree_node_conect</div><div class='selector'>icon_tree_node_conect</div></div></li>
+		<li><div class='iconwraper'><div class='icon icon_folder_open'>folder_open</div><div class='selector'>icon_folder_open</div></div></li>
+		<li><div class='iconwraper'><div class='icon icon_folder'>folder</div><div class='selector'>icon_folder</div></div></li>
+		<li><div class='iconwraper'><div class='icon icon_file'>file</div><div class='selector'>icon_file</div></div></li>
+</ul>
+</div>
+<script>
+var icons = document.querySelectorAll('.icon'),
+	fontsize = document.getElementById('fontsize'),
+	sty = document.getElementById('freshstyle');
+function bgCol(e){
+	sty.innerHTML = '.icon:before{background-color:'+e.target.style.background+'}';
+}
+function fontSize(tz){
+	var icon;
+	for(var i=0;i<icons.length; i++){
+		icon = icons[i];
+		icon.style.fontSize = tz.value+'px';
+		fontsize.innerHTML = tz.value;
+	}
+}
+function fn(e){
+	if(e.target.classList.contains('selector')){
+		var rng=document.createRange();
+		rng.selectNode(e.target);
+		getSelection().addRange(rng);
+	}
+}
+addEventListener('click', fn, false);
+function bgType(inp){
+	document.querySelector('html').className='iconing_'+inp.value;
+}
+</script>
+</body>
+</html>

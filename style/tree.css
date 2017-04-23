@@ -1,0 +1,88 @@
+ngTree {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+  font-size: 18px;
+}
+.tree_node_info + .sub_tree {
+  padding-left: 1em;
+  display: none;
+}
+.tree_node_info.tree_node_open + .sub_tree {
+  display: block;
+}
+.tree_node_selected .tree_node_info_wraper {
+  background: rgba(250, 201, 23, 0.1);
+  border-color: rgba(250, 201, 23, 0.3);
+}
+.sub_tree {
+  background: url(images/point.svg) repeat-y 0 0;
+  background-size: 1em;
+}
+.tree_node_info.tree_closed + .sub_tree {
+  display: none;
+}
+.tree_node_info {
+  white-space: nowrap;
+  cursor: default;
+}
+.tree_node_info:after {
+  content: "";
+  clear: both;
+  display: block;
+}
+.tree_node_info * {
+  float: left;
+  line-height: 1em;
+}
+.tree_folder .tree_node_icon {
+  background-position: 37.5% 100%;
+}
+.tree_folder.tree_node_open .tree_node_icon {
+  background-position: 25% 100%;
+}
+.tree_node_name {
+  font-size: 0.8em;
+  padding: 0.125em;
+}
+/*文件*/
+.tree_node_info .tree_connect {
+  background-position: 0 0;
+}
+/*文件夹-关闭*/
+.tree_node_info.tree_folder .tree_connect {
+  background-position: 12.5% 0;
+}
+/*文件夹-打开*/
+.tree_node_info.tree_folder.tree_node_open .tree_connect {
+  background-position: 25% 0;
+}
+.tree_node {
+  /*最后的-文件*/
+  /*最后的-文件夹*/
+  /*最后的-文件夹-打开*/
+}
+.tree_node:last-child > .tree_node_info .tree_connect {
+  background-position: 37.5% 0;
+}
+.tree_node:last-child > .tree_node_info.tree_folder .tree_connect {
+  background-position: 62.5% 0;
+}
+.tree_node:last-child > .tree_node_info.tree_folder.tree_node_open .tree_connect {
+  background-position: 50% 0;
+}
+.tree_node:last-child > .sub_tree {
+  background: none;
+}
+.tree_connect,
+.tree_node_icon {
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+  user-select: none;
+  background-image: url(images/icons.svg);
+  background-repeat: no-repeat;
+  background-size: 900% 200%;
+  background-position: 50% 100%;
+}
