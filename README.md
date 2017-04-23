@@ -1,3 +1,7 @@
+#screenshot
+
+![screenshot](https://raw.githubusercontent.com/1inus/angular4-tree/master/screenshot.png)
+
 #NPM
 ```
 npm install angular4-tree
