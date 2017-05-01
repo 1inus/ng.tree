@@ -1,4 +1,4 @@
-rename to ng-tree!
+rename to ngTree!
 
 #screenshot
 
@@ -6,11 +6,11 @@ rename to ng-tree!
 
 #NPM
 ```
-npm install ng-tree
+npm install ngTree
 ```
 
 #Release notes
-* 2017/4/23——rename to ng-tree
+* 2017/4/23——rename to ngTree
 * 2017/4/23——publish to npm
 
 #TODO
