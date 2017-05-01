@@ -1,0 +1,33 @@
+[class^='icon_'],
+[class*=' icon_'] {
+  background: none;
+}
+.warning {
+  color: red;
+}
+ngTree {
+  font-size: 36px;
+}
+.icon-bin,
+.icon-plus,
+.icon-edit {
+  color: #aaa;
+}
+.icon-bin:hover {
+  color: red;
+}
+.icon-plus:hover {
+  color: #888;
+}
+.icon-edit:hover {
+  color: green;
+}
+.demos {
+  text-align: center;
+}
+.demos > div {
+  overflow: auto;
+  text-align: left;
+  display: inline-block;
+  vertical-align: top;
+}

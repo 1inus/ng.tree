@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var TypedocWebpackPlugin = require('typedoc-webpack-plugin');
 
 module.exports = {
 	entry: {
@@ -16,5 +17,18 @@ module.exports = {
 	},
 	resolve: {
 		extensions: ['.js', '.ts']
-	}
+	},
+	plugins: [
+		/*new TypedocWebpackPlugin({
+			name: 'ngTree',
+			mode: 'file',
+			theme: './typedoc-theme/',
+			includeDeclarations: true,
+			ignoreCompilerErrors: true,
+		}),
+		new webpack.optimize.UglifyJsPlugin({
+			comments: false,
+			compress: {warnings: false}
+		})*/
+	]
 };

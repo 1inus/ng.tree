@@ -1,0 +1,64 @@
+[class^='icon_'], [class*=' icon_'] {
+	line-height:1em;
+
+}
+[class^='icon_']:before, [class*=' icon_']:before {
+	background-image:url(images/icons.svg);
+}
+.iconing_png [class^='icon_']:before, .iconing_png [class*=' icon_']:before {
+	background-image:url(images/icons.png);
+}
+[class^='icon_']:before, [class*=' icon_']:before {
+	content:'♥';
+	width:1em;
+	height:1em;
+	line-height:1em;
+	display:inline-block;
+	color:transparent;
+	background-repeat: no-repeat;
+	background-size:900% 200%;
+	background-position:1em 1em;
+}
+
+.icon_tree_node_conect_1:before{
+	background-position:0 0;
+}
+.icon_tree_node_conect_2:before{
+	background-position:12.5% 0;
+}
+.icon_tree_node_conect_3:before{
+	background-position:25% 0;
+}
+.icon_tree_node_conect_4:before{
+	background-position:37.5% 0;
+}
+.icon_tree_node_conect_5:before{
+	background-position:50% 0;
+}
+.icon_tree_node_conect_6:before{
+	background-position:62.5% 0;
+}
+.icon_tree_node_conect_7:before{
+	background-position:75% 0;
+}
+.icon_tree_node_conect_8:before{
+	background-position:87.5% 0;
+}
+.icon_tree_node_conect_9:before{
+	background-position:100% 0;
+}
+.icon_tree_node_conect_10:before{
+	background-position:0 100%;
+}
+.icon_tree_node_conect:before{
+	background-position:12.5% 100%;
+}
+.icon_folder_open:before{
+	background-position:25% 100%;
+}
+.icon_folder:before{
+	background-position:37.5% 100%;
+}
+.icon_file:before{
+	background-position:50% 100%;
+}

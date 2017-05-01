@@ -1,0 +1,129 @@
+{
+  "IcoMoonType": "selection",
+  "icons": [
+    {
+      "icon": {
+        "paths": [
+          "M732 192c55.226 0 100 44.772 100 100 0 22.514-7.445 43.285-20 60l-40 40-140-140 40-40c16.715-12.555 37.485-20 60-20zM232 652l-40 180 180-40 370-370-140-140-370 370zM639.235 419.235l-280 280-34.474-34.474 280-280 34.474 34.474z"
+        ],
+        "attrs": [],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "tags": [
+          "pencil",
+          "write",
+          "edit"
+        ],
+        "defaultCode": 59653,
+        "grid": 16
+      },
+      "attrs": [],
+      "properties": {
+        "ligatures": "pencil, write",
+        "name": "edit",
+        "id": 5,
+        "order": 8,
+        "prevSize": 32,
+        "code": 59653
+      },
+      "setIdx": 0,
+      "setId": 1,
+      "iconIdx": 5
+    },
+    {
+      "icon": {
+        "paths": [
+          "M272 392v400c0 22 18 40 40 40h360c22 0 40-18 40-40v-400h-440zM392 752h-40v-280h40v280zM472 752h-40v-280h40v280zM552 752h-40v-280h40v280zM632 752h-40v-280h40v280z",
+          "M722 272h-130v-50c0-16.5-13.5-30-30-30h-140c-16.5 0-30 13.5-30 30v50h-130c-16.5 0-30 13.5-30 30v50h520v-50c0-16.5-13.5-30-30-30zM552 272h-120v-39.498h120v39.498z"
+        ],
+        "attrs": [],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "tags": [
+          "bin",
+          "trashcan",
+          "remove",
+          "delete",
+          "recycle",
+          "dispose"
+        ],
+        "defaultCode": 59820,
+        "grid": 16
+      },
+      "attrs": [],
+      "properties": {
+        "ligatures": "bin, trashcan",
+        "name": "bin",
+        "id": 172,
+        "order": 7,
+        "prevSize": 32,
+        "code": 59820
+      },
+      "setIdx": 0,
+      "setId": 1,
+      "iconIdx": 172
+    },
+    {
+      "icon": {
+        "paths": [
+          "M782 440h-198v-198c0-9.94-8.060-18-18-18h-108c-9.941 0-18 8.060-18 18v198h-198c-9.94 0-18 8.059-18 18v108c0 9.94 8.060 18 18 18h198v198c0 9.94 8.059 18 18 18h108c9.94 0 18-8.060 18-18v-198h198c9.94 0 18-8.060 18-18v-108c0-9.941-8.060-18-18-18z"
+        ],
+        "attrs": [],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "tags": [
+          "plus",
+          "add",
+          "sum"
+        ],
+        "defaultCode": 59914,
+        "grid": 16
+      },
+      "attrs": [],
+      "properties": {
+        "ligatures": "plus, add",
+        "name": "plus",
+        "id": 266,
+        "order": 6,
+        "prevSize": 32,
+        "code": 59914
+      },
+      "setIdx": 0,
+      "setId": 1,
+      "iconIdx": 266
+    }
+  ],
+  "height": 1024,
+  "metadata": {
+    "name": "icomoon"
+  },
+  "preferences": {
+    "showGlyphs": true,
+    "showQuickUse": true,
+    "showQuickUse2": true,
+    "showSVGs": true,
+    "fontPref": {
+      "prefix": "icon-",
+      "metadata": {
+        "fontFamily": "icomoon"
+      },
+      "metrics": {
+        "emSize": 1024,
+        "baseline": 6.25,
+        "whitespace": 50
+      },
+      "embed": false
+    },
+    "imagePref": {
+      "prefix": "icon-",
+      "png": true,
+      "useClassSelector": true,
+      "color": 0,
+      "bgColor": 16777215,
+      "classSelector": ".icon"
+    },
+    "historySize": 50,
+    "showCodes": true,
+    "gridSize": 16
+  }
+}
