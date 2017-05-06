@@ -25,9 +25,16 @@ ngTree {
 .demos {
   text-align: center;
 }
-.demos > div {
+.demos h2 {
+  padding: 10px 0.5em;
+  margin: 0;
+}
+.demos .demo {
   overflow: auto;
   text-align: left;
   display: inline-block;
   vertical-align: top;
+  height: 400px;
+  padding: 5px;
+  width: 280px;
 }

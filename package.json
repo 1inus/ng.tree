@@ -1,6 +1,6 @@
 {
-  "name": "ngTree",
-  "version": "1.0.3",
+  "name": "ng.tree",
+  "version": "1.0.6",
   "description": "",
   "main": "ngTree.js",
   "scripts": {
@@ -24,6 +24,10 @@
     "reflect-metadata": "^0.1.10",
     "rxjs": "^5.2.0",
     "zone.js": "^0.8.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/1inus/ng.tree.git"
   },
   "author": "",
   "license": "ISC",

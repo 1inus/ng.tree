@@ -7,21 +7,19 @@ import {platformBrowserDynamic} from "@angular/platform-browser-dynamic";
 import {NgTree} from "../ngTree";
 
 @Component({
-	selector: '.app',
+	selector: '.demos',
 	template: `
-		<div class="demos">
-			<div>
-				<h2>ordinary ng-tree</h2>
-				<ngTree [treeData]="treeData" [treeConfig]="treeConfig"></ngTree>
-			</div>
-			<div>
-				<h2>custom icon</h2>
-				<ngTree [treeData]="treeData1" [treeConfig]="treeConfig1"></ngTree>
-			</div>
-			<div>
-				<h2>custom edit tool</h2>
-				<ngTree [treeData]="treeData1" [treeConfig]="treeConfig2"></ngTree>
-			</div>
+		<div class="demo demo1">
+			<h2>ordinary ng-tree</h2>
+			<ngTree [treeData]="treeData" [treeConfig]="treeConfig"></ngTree>
+		</div>
+		<div class="demo demo2">
+			<h2>custom icon</h2>
+			<ngTree [treeData]="treeData1" [treeConfig]="treeConfig1"></ngTree>
+		</div>
+		<div class="demo demo3">
+			<h2>custom edit tool</h2>
+			<ngTree [treeData]="treeData1" [treeConfig]="treeConfig2"></ngTree>
 		</div>
 	`
 })
@@ -33,21 +31,18 @@ class App {
 		nameClass:"warning",
 		children: [{
 			name: '笔记',
-			enableTools:false,
+			isOpen:true,
 			children:[{
-				name: '笔记',
-				enableTools:false
+				name: 'java'
 			},{
-				name: '电子书',
-				enableTools:false
+				name: 'js'
 			}]
 		},{
-			name: '电子书',
-			enableTools:false
+			name: '电子书'
 		}]
 	},{
 		name: '我的网盘',
-		isOpene:true,
+		isOpen:true,
 		children:[{
 			name: 'secret🤐'
 		},{
@@ -69,16 +64,20 @@ class App {
 		enableTool:false,
 		children:[{
 			name: 'secret🤐',
-			iconClass:"icon_folder_lock"
+			iconClass:"icon_folder_lock",
+			enableTool:false
 		},{
 			name: 'photos',
-			iconClass:"icon_photo"
+			iconClass:"icon_photo",
+			enableTool:false
 		}]
 	}, {
 		name:"✌nice day✌",
 		iconClass:"icon_sunny",
+		enableTool:false,
+		isOpen:true,
 		children:[
-			{name:"😀",iconClass:false},{name:"😍",iconClass:false},
+			{name:"😀",iconClass:false,isChecked:true},{name:"😍",iconClass:false},{name:"🚴",iconClass:false},
 			{name:"😘",iconClass:false},{name:"😴",iconClass:false}]
 	}];
 	
@@ -119,7 +118,9 @@ class App {
 			if(name=="icon-plus"){
 				node.children = node.children || [];
 				node.children.push({
-					name : (new Date().getTime()).toString().substring(8, 13);
+					name : node.name,
+					enableTool:false,
+					iconClass:false
 				});
 			} else if(name=="icon-edit"){
 				node.name = (new Date().getTime()).toString().substring(8, 13);

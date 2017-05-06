@@ -141,7 +141,8 @@ export interface TreeConfig {
 	'[ngClass]="{ngtree_folder: n[treeMap.children], ngtree_node_open:n[treeMap.isOpen], ngtree_node_selected:n[treeMap.isChecked]}">'+
 		'<div class="ngtree_connect" (click)="openNode(n, $event)"></div>'+
 		'<div (click)="nodeClick(n, $event);" class="ngtree_node_info_wraper">'+
-			'<div *ngIf="n[treeMap.iconClass]!=false" class="{{n[treeMap.iconClass]}} ngtree_node_icon {{!(n[treeMap.iconClass])?\'ngtree_folder_icon\':\'\'}}"></div>'+
+			'<div class="{{n[treeMap.iconClass]}} ngtree_node_icon {{!(n[treeMap.iconClass])?\'ngtree_folder_icon\':\'\'}}"'+
+				'[ngClass]="{tree_icon_hide:n[treeMap.iconClass]==false}"></div>'+
 			'<div class="ngtree_node_name {{n[treeMap.nameClass]}}">{{n[treeMap.name]}}</div>' +
 			'<div class="ngtree_node_toolbar" (click)="onEdit(n, $event)" *ngIf="n[treeMap.enableTools]!=false && (treeConfig.tools||treeData.tools)">' +
 				'<div class="{{t.name}}" *ngFor="let t of (n[treeMap.tools] || treeConfig.tools)" title="{{t.title}}"></div>' +

@@ -1,16 +1,21 @@
-rename to ngTree!
+rename from angular4-tree to ng.tree!
 
-#screenshot
+[document](https://1inus.github.io/ng-tree-site/doc.html)
 
-![screenshot](https://raw.githubusercontent.com/1inus/angular4-tree/master/screenshot.png)
+[live demo](https://1inus.github.io/ng-tree-site)
 
-#NPM
+# screenshot
+
+![screenshot](https://1inus.github.io/ng-tree-site/screenshot.png)
+![screenshot](https://1inus.github.io/ng-tree-site/screenshot1.png)
+
+# NPM
 ```
-npm install ngTree
+npm install ng.tree
 ```
 
-#Release notes
-* 2017/4/23——rename to ngTree
+# Release notes
+* 2017/4/23——rename from angular4-tree to ng.tree!
 * 2017/4/23——publish to npm
 
 #TODO

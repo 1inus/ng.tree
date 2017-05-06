@@ -97,9 +97,9 @@ ngTree > * {
   height: 100%;
   background: url(folder_front.png) no-repeat center center;
   background-size: 0.9em auto;
-  -moz-transform: rotateX(-12deg);
-  -webkit-transform: rotateX(-12deg);
-  transform: rotateX(-12deg);
+  -moz-transform: rotateX(0);
+  -webkit-transform: rotateX(0);
+  transform: rotateX(0);
   -moz-transform-origin: 50% 88%;
   -webkit-transform-origin: 50% 88%;
   transform-origin: 50% 88%;
@@ -159,6 +159,10 @@ ngTree > * {
 }
 .ngtree_node_icon {
   margin: 0 0.125em;
+}
+.ngtree_node_icon.tree_icon_hide {
+  width: 0;
+  margin: 0;
 }
 .ngtree_node_toolbar {
   margin-left: 8px;
