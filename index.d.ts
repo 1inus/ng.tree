@@ -1,39 +1,60 @@
-declare module 'ngTree' {
+declare module 'ng.tree' {
+	import { ViewContainerRef } from '@angular/core';
 	export interface TreeData {
 	    [key: string]: any;
 	    name?: string;
 	    isOpen?: boolean;
-	    iconSelector?: string;
-	    nameSelector?: string;
+	    iconClass?: string | boolean;
+	    nameClass?: string;
 	    children?: TreeData[];
-	    isChecked?: string;
-	}
-	export interface TreeDataMap {
-	    name?: string;
-	    isOpen?: string;
-	    iconSelector?: string;
-	    nameSelector?: string;
-	    children?: string;
-	    isChecked?: string;
+	    isChecked?: boolean;
+	    tools?: {
+	        name: string;
+	        title?: string;
+	    }[];
 	}
 	export interface TreeConfig {
 	    onFold?: (node?: any) => boolean;
 	    onClick?: (node?: any) => void;
+	    onToolClick?: (node?: any, toolName?: string) => void;
 	    dataFilter?: (nodeData?: any) => any;
+	    tools?: {
+	        name: string;
+	        title?: string;
+	    }[];
+	    enableTools?: boolean;
+	    dataMap?: {
+	        name?: string;
+	        isOpen?: string;
+	        iconClass?: string;
+	        nameClass?: string;
+	        children?: string;
+	        isChecked?: string;
+	        tools?: string;
+	        enableTools?: string;
+	    };
 	}
 	export class NgTree {
-	    static DATAMAP: TreeDataMap;
+	    static DATAMAP: any;
+	    private treeElement;
+	    constructor(view: ViewContainerRef);
 	    private parent;
 	    private isSub;
 	    private treeData;
 	    private treeContext;
-	    private treeMap;
 	    private treeConfig;
-	    ngOnChanges(changes: any): void;
+	    private treeMap;
+	    private isOpen;
+	    private openTimeout;
+	    private closeTimeout;
+	    private nodeCount;
+	    private ngOnChanges(changes);
 	    private tData;
-	    ngOnInit(): void;
+	    private ngOnInit();
+	    private ngDoCheck();
 	    private openNode(node, e);
 	    private nodeClick(node, e);
+	    private onEdit(node, e);
 	}
 
 }

@@ -1,8 +1,8 @@
 {
   "name": "ng.tree",
-  "version": "1.0.6",
+  "version": "2.0.1",
   "description": "",
-  "main": "ngTree.js",
+  "main": "ng.tree.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

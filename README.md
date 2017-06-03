@@ -190,7 +190,7 @@ use it
 import {Component, NgModule} from '@angular/core';
 import {BrowserModule} from "@angular/platform-browser";
 import {platformBrowserDynamic} from "@angular/platform-browser-dynamic";
-import {NgTree} from "../ngTree";
+import {NgTree} from "ng.tree";
 
 @Component({
 	selector: 'app',
