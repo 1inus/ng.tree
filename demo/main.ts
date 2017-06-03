@@ -1,17 +1,17 @@
 import "reflect-metadata";
 import "zone.js";
 
-import {Component, NgModule, ViewChild, ElementRef} from '@angular/core';
+import {Component, NgModule, ViewChild, ElementRef, ViewContainerRef} from '@angular/core';
 import {BrowserModule} from "@angular/platform-browser";
 import {platformBrowserDynamic} from "@angular/platform-browser-dynamic";
-import {NgTree} from "../ngTree";
+import {NgTree} from "../ng.tree";
 
 @Component({
 	selector: '.demos',
 	template: `
 		<div class="demo demo1">
 			<h2>ordinary ng-tree</h2>
-			<ngTree [treeData]="treeData" [treeConfig]="treeConfig"></ngTree>
+			<ngTree #treeNo1 [treeData]="treeData" [treeConfig]="treeConfig"></ngTree>
 		</div>
 		<div class="demo demo2">
 			<h2>custom icon</h2>
@@ -24,6 +24,9 @@ import {NgTree} from "../ngTree";
 	`
 })
 class App {
+	@ViewChild('treeNo1')
+	private treeNo1:NgTree;
+
 	/*demo0*/
 	public treeData: any[] = [{
 		name: "我的电脑",
@@ -52,7 +55,13 @@ class App {
 		}]
 	}];
 	
-	public treeConfig : any = {}
+	public treeConfig : any = {
+		/*open or close tree node*/
+		onFold : (node:any):boolean => {
+			console.log(this.treeNo1.findNodeParent(node), this.treeNo1.findNodeSiblings(node));
+			return true;
+		}
+	}
 	
 	
 	/*demo1*/
@@ -84,6 +93,7 @@ class App {
 	public treeConfig1 : any = {
 		/*open or close tree node*/
 		onFold : (node:any):boolean => {
+			console.log(this.treeNo1);
 			if(!node.isOpen && node.iconClass=="icon_cloud"){
 				let icon = node.iconClass;
 				node.iconClass = "icon_sunny";
@@ -136,27 +146,6 @@ class App {
 	public treeMap = {
 		children:"children"
 	};
-}
-
-@Component({
-	selector:".dialog",
-	template:`<div>
-		name:<input value=""/><button (click)="apply()">apply</button>
-	</div>`
-})
-class editNode{
-	private node:any;
-	private input:any;
-	
-	constructor(private elementRef: ElementRef, private ly:NgLayerRef){
-	}
-	
-	private apply(){
-		this.input = this.elementRef.nativeElement.querySelector("input");
-		console.log(this.node);
-		this.node.name = this.input.value;
-		this.ly.close();
-	}
 }
 
 @NgModule({

@@ -37,6 +37,7 @@ declare module 'ng.tree' {
 	export class NgTree {
 	    static DATAMAP: any;
 	    private treeElement;
+	    private treeRoot;
 	    constructor(view: ViewContainerRef);
 	    private parent;
 	    private isSub;
@@ -48,6 +49,8 @@ declare module 'ng.tree' {
 	    private openTimeout;
 	    private closeTimeout;
 	    private nodeCount;
+	    findNodeSiblings(node: any): any[];
+	    findNodeParent(node: any): any;
 	    private ngOnChanges(changes);
 	    private tData;
 	    private ngOnInit();

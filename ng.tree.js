@@ -15,6 +15,60 @@ var NgTree = NgTree_1 = (function () {
         this.nodeCount = 0;
         this.treeElement = view.element.nativeElement;
     }
+    NgTree.prototype.findNodeSiblings = function (node) {
+        if (!this.treeRoot) {
+            console.error("please find from tree root");
+            return;
+        }
+        var stack = [];
+        if (this.treeRoot.indexOf(node) > -1) {
+            return this.treeRoot;
+        }
+        this.treeRoot.forEach(function (item) {
+            stack.push(item);
+        });
+        var item, children;
+        while (stack.length) {
+            item = stack.shift();
+            children = item[this.treeMap.children];
+            if (children && children.length) {
+                if (children.indexOf(node) > -1) {
+                    return children;
+                }
+                else {
+                    stack = stack.concat(item.children);
+                }
+            }
+        }
+        return null;
+    };
+    NgTree.prototype.findNodeParent = function (node) {
+        if (!this.treeRoot) {
+            console.error("please find from tree root");
+            return;
+        }
+        var stack = [];
+        this.treeRoot.forEach(function (item) {
+            if (node == item) {
+                return {};
+            }
+            stack.push(item);
+        });
+        var item, children;
+        while (stack.length) {
+            item = stack.shift();
+            children = item[this.treeMap.children];
+            if (children && children.length) {
+                if (children.indexOf(node) > -1) {
+                    return item;
+                }
+                else {
+                    stack = stack.concat(item.children);
+                }
+            }
+        }
+        return null;
+    };
     NgTree.prototype.ngOnChanges = function (changes) {
         var _this = this;
         if (changes.isOpen && this.isSub) {
@@ -45,8 +99,8 @@ var NgTree = NgTree_1 = (function () {
         }
     };
     NgTree.prototype.ngOnInit = function () {
-        var _this = this;
         if (!this.isSub) {
+            this.treeRoot = this.treeData;
             var defaultMap = Object.assign({}, NgTree_1.DATAMAP);
             this.treeMap = this.treeConfig ? Object.assign(defaultMap, this.treeConfig.dataMap) : defaultMap;
             this.treeContext = {
@@ -54,15 +108,6 @@ var NgTree = NgTree_1 = (function () {
             };
         }
         if (this.treeData) {
-            this.treeData.forEach(function (t, i) {
-                if (_this.parent) {
-                    t.ngTreeNodeParent = _this.parent;
-                }
-                else {
-                    t.ngTreeNodeParent = {};
-                    t.ngTreeNodeParent[_this.treeMap.children] = _this.treeData;
-                }
-            });
             if (this.treeConfig && typeof this.treeConfig.dataFilter == "function") {
                 this.tData = this.treeConfig.dataFilter(this.treeData);
             }

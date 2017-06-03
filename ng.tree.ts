@@ -173,6 +173,8 @@ export class NgTree {
 	}
 	
 	private treeElement:any;
+
+	private treeRoot:any;
 	
 	constructor(view:ViewContainerRef){
 		this.treeElement = view.element.nativeElement;
@@ -190,6 +192,84 @@ export class NgTree {
 	private closeTimeout:any;
 	
 	private nodeCount:number = 0;
+	
+	/**
+	 * only work for tree root instance
+	 * @param node 
+	 * @return siblings include itself
+	 */
+	public findNodeSiblings(node:any):any[]{
+		if(!this.treeRoot){
+			console.error("please find from tree root");
+			return;
+		}
+
+        let stack:any[] = [];
+
+		if(this.treeRoot.indexOf(node)>-1){
+			return this.treeRoot;
+		}
+
+		//先将第一层节点放入栈
+		this.treeRoot.forEach((item:any)=>{
+			stack.push(item);
+		});
+
+        let item, children;
+        while (stack.length) {
+            item = stack.shift();
+			children = item[this.treeMap.children];
+
+            if (children && children.length) {
+				if(children.indexOf(node)>-1){
+					return children;
+				} else {
+                	stack = stack.concat(item.children);
+				}
+            }
+        }
+
+		return null;
+	}
+
+	/**
+	 * only work for tree root instance
+	 * @param node 
+	 * @return parent if node belongs to root, return an empty object, otherwise return null
+	 */
+	public findNodeParent(node:any):any {
+		if(!this.treeRoot){
+			console.error("please find from tree root");
+			return;
+		}
+
+        let stack:any[] = [];
+
+		//先将第一层节点放入栈
+		this.treeRoot.forEach((item:any)=>{
+			if(node == item){
+				return {};
+			}
+
+			stack.push(item);
+		});
+
+        let item, children;
+        while (stack.length) {
+            item = stack.shift();
+			children = item[this.treeMap.children];
+
+            if (children && children.length) {
+				if(children.indexOf(node)>-1){
+					return item;
+				} else {
+                	stack = stack.concat(item.children);
+				}
+            }
+        }
+
+		return null;
+	}
 	
 	/**/
 	private ngOnChanges(changes: any) {
@@ -227,6 +307,7 @@ export class NgTree {
 	private tData:any;
 	private ngOnInit(){
 		if(!this.isSub){
+			this.treeRoot = this.treeData;
 			let defaultMap = Object.assign({}, NgTree.DATAMAP);
 			this.treeMap = this.treeConfig ? Object.assign(defaultMap, this.treeConfig.dataMap):defaultMap;
 			this.treeContext = {
@@ -236,15 +317,6 @@ export class NgTree {
 		
 		/*add parent refrence to children node*/
 		if(this.treeData){
-			this.treeData.forEach((t, i)=>{
-				if(this.parent){
-					t.ngTreeNodeParent = this.parent;
-				} else {
-					t.ngTreeNodeParent = {};
-					t.ngTreeNodeParent[this.treeMap.children] = this.treeData;
-				}
-			})
-			
 			/*format or filter tree datas before subtree being created*/
 			if(this.treeConfig && typeof this.treeConfig.dataFilter == "function"){
 				this.tData = this.treeConfig.dataFilter(this.treeData);

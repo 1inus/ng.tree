@@ -27,6 +27,24 @@ npm install ng.tree
 ngTree component. useage : 
 <code class="lang-TypeScript"><ngTree [treeData]="TreeData[]" [treeConfig]="TreeConfig"></ngTree></code>
 
+```typescript
+class TreeData{
+	/**
+	 * only work for tree root instance
+	 * @param node 
+	 * @return siblings. include itself
+	 */
+	public findNodeSiblings(node:any):any[];
+
+	/**
+	 * only work for tree root instance
+	 * @param node 
+	 * @return parent. if node belongs to root, return an empty object, otherwise return null
+	 */
+	public findNodeParent(node:any):any;
+}
+```
+
 ## TreeData
 data for creating tree
 
