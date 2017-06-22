@@ -27,23 +27,9 @@ npm install ng.tree
 ngTree component. useage : 
 <code class="lang-TypeScript"><ngTree [treeData]="TreeData[]" [treeConfig]="TreeConfig"></ngTree></code>
 
-```typescript
-class TreeData{
-	/**
-	 * only work for tree root instance
-	 * @param node 
-	 * @return siblings. include itself
-	 */
-	public findNodeSiblings(node:any):any[];
-
-	/**
-	 * only work for tree root instance
-	 * @param node 
-	 * @return parent. if node belongs to root, return an empty object, otherwise return null
-	 */
-	public findNodeParent(node:any):any;
-}
-```
+* <code class="lang-TypeScript">public searchNodes(nodes:any[], condition:string|{[key:string]:any}, ignoreCase?:boolean):any[]</code>,only work for tree root instance
+* <code class="lang-TypeScript">public findNodeSiblings(node:any):any[]</code>,only work for tree root instance
+* <code class="lang-TypeScript">public findNodeParent(node:any):any</code>,only work for tree root instance, if node belongs to root, return an empty object, otherwise return null
 
 ## TreeData
 data for creating tree
@@ -55,45 +41,6 @@ data for creating tree
 * <code class="lang-TypeScript">children?:TreeData[]</code>,sub tree data
 * <code class="lang-TypeScript">isChecked?:boolean</code>,is checked
 * <code class="lang-TypeScript">tools?: {name:string, title?:string}[]</code>,customized edit button
-
-```typescript
-export interface TreeData{
-	/**
-	 * tree node name
-	 */
-	name?:string;
-	
-	/**
-	 * collapse or not(node has subtree)
-	 */
-	isOpen?:boolean;
-	
-	/**
-	 * a class selector add to icon element, false to disable node icon
-	 */
-	iconClass?:string|boolean;
-	
-	/**
-	 * a class selector add to name element
-	 */
-	nameClass?:string;
-	
-	/**
-	 * sub tree data
-	 */
-	children?:TreeData[];
-	
-	/**
-	 * is checked
-	 */
-	isChecked?:boolean;
-	
-	/**
-	 * customized edit button
-	 */
-	tools?: {name:string, title?:string}[];
-}
-```
 
 ## TreeConfig
 
@@ -112,87 +59,6 @@ export interface TreeData{
 	* <code>dataMap.isChecked?:string</code>,default to "isChecked"
 	* <code>dataMap.tools?:string</code>,default to "tools"
 	* <code>dataMap.enableTools? : string</code>,default to "enableTools"
-
-```typescript
-export interface TreeConfig {
-	/**
-	 * execute before treenode collapse or uncollapse, returns false to disable the default action
-	 * @param node
-	 */
-	onFold? : (node?:any) => boolean;
-	
-	/**
-	 * trigger on icon or name click
-	 * @param node
-	 */
-	onClick? : (node?:any) => void;
-	
-	/**
-     * trigger on tool button click
-     * @param node
-     * @param toolName
-     */
-    onToolClick? : (node?:any, toolName?:string) => void;
-	
-	/**
-	 * format customized data to TreeData. effect on tree init
-	 * @param nodeData
-	 */
-	dataFilter?: (nodeData?:any) => any;
-	
-	/**
-	 *
-	 */
-	tools?: {name:string, title?:string}[];
-	
-	/**
-	 * enable toolbar or not
-	 */
-	enableTools?: boolean;
-	
-	/**
-	 * format customized data to TreeData
-	 */
-	dataMap? : {
-		/**
-		 * default to "name"
-		 */
-		name?:string;
-		
-		/**
-		 * deafult to 'isOpen'
-		 */
-		isOpen?:string;
-		
-		/**
-		 * default to "iconClass"
-		 */
-		iconClass?:string;
-		
-		/**
-		 * default to "nameClass"
-		 */
-		nameClass?:string;
-		
-		/**
-		 * default to "children"
-		 */
-		children?:string;
-		
-		/**
-		 * default to "isChecked"
-		 */
-		isChecked?:string;
-		
-		/**
-		 *
-		 */
-		tools?: string;
-		
-		enableTools? : string;
-	}
-}
-```
 
 #Usage & demo
 talk is cheape, show you my code

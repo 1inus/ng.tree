@@ -49,6 +49,10 @@ declare module 'ng.tree' {
 	    private openTimeout;
 	    private closeTimeout;
 	    private nodeCount;
+	    searchNodes(condition: {
+	        [key: string]: any;
+	    }): any[];
+	    private filter(value, condition);
 	    findNodeSiblings(node: any): any[];
 	    findNodeParent(node: any): any;
 	    private ngOnChanges(changes);

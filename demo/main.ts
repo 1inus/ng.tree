@@ -58,7 +58,7 @@ class App {
 	public treeConfig : any = {
 		/*open or close tree node*/
 		onFold : (node:any):boolean => {
-			console.log(this.treeNo1.findNodeParent(node), this.treeNo1.findNodeSiblings(node));
+			console.log(this.treeNo1.searchNodes(null, {name:"我的"}));
 			return true;
 		}
 	}
@@ -93,14 +93,9 @@ class App {
 	public treeConfig1 : any = {
 		/*open or close tree node*/
 		onFold : (node:any):boolean => {
-			console.log(this.treeNo1);
 			if(!node.isOpen && node.iconClass=="icon_cloud"){
 				let icon = node.iconClass;
 				node.iconClass = "icon_sunny";
-				setTimeout(()=>{
-					node.isOpen = true;
-					node.iconClass = icon;
-				}, 1000);
 				return false;
 			} else {
 				return true;

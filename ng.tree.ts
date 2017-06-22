@@ -196,6 +196,86 @@ export class NgTree {
 	/**
 	 * only work for tree root instance
 	 * @param node 
+	 * @return search nodes
+	 */
+	public searchNodes(nodes:any[], condition:string|{[key:string]:any}, ignoreCase?:boolean):any[]{
+		if(!this.treeRoot){
+			console.error("please search from tree root");
+			return;
+		}
+
+        let stack:any[] = [];
+        let vals:any[] = [];
+		
+		//搜索第一层
+		vals = vals.concat(this.filter((nodes?nodes:this.treeRoot), condition));
+		
+		//先将第一层节点放入栈
+		this.treeRoot.forEach((item:any)=>{
+			stack.push(item);
+		});
+
+        let item, children;
+        while (stack.length) {
+            item = stack.shift();
+			children = item[this.treeMap.children];
+			
+            if (children && children.length) {
+            	vals = vals.concat(this.filter(children, condition));
+            	stack = stack.concat(item.children);
+            }
+        }
+
+		return vals;
+	}
+	
+	private filter(nodes:any[], condition:string|{[key:string]:any}, ignoreCase?:boolean):any[]{
+		nodes = nodes || this.treeRoot;
+		if(!condition) return nodes;
+
+		let argType = typeof condition;
+		
+		if(argType == "string"){
+			condition = (<string>condition).trim();
+			if(condition==""){
+				return nodes;
+			}
+			
+			if(ignoreCase){
+				condition = condition.toUpperCase();
+			}
+
+			return nodes.filter((o)=>{
+				if(!o) return;
+				let val;
+				return Object.keys(o).some((k)=>{
+					val = o[k];
+					if(typeof val=="string"){
+						if(ignoreCase){
+							return val.toUpperCase().indexOf((<string>condition))>-1;
+						} else {
+							return val.indexOf((<string>condition))>-1;
+						}
+					} else {
+						return false;
+					}
+				})
+			});
+		} else if(argType === 'object'){
+			return nodes.filter((o)=>{
+				if(!o) return o;
+				return Object.keys(condition).every((k)=>{
+					return o[k]==(<any>condition)[k];
+				})
+			});
+		} else {
+			return nodes;
+		}
+	}
+	
+	/**
+	 * only work for tree root instance
+	 * @param node 
 	 * @return siblings include itself
 	 */
 	public findNodeSiblings(node:any):any[]{
