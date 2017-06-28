@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Created by lwei on 2017/4/15.
  */
 
@@ -229,7 +229,7 @@ export class NgTree {
 		return vals;
 	}
 	
-	private filter(nodes:any[], condition:string|{[key:string]:any}, ignoreCase?:boolean):any[]{
+	private filter(nodes:any[], condition:string|{[key:string]:any}, ignoreCase?:boolean):any[] {
 		nodes = nodes || this.treeRoot;
 		if(!condition) return nodes;
 

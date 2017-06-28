@@ -15,6 +15,74 @@ var NgTree = NgTree_1 = (function () {
         this.nodeCount = 0;
         this.treeElement = view.element.nativeElement;
     }
+    NgTree.prototype.searchNodes = function (nodes, condition, ignoreCase) {
+        if (!this.treeRoot) {
+            console.error("please search from tree root");
+            return;
+        }
+        var stack = [];
+        var vals = [];
+        vals = vals.concat(this.filter((nodes ? nodes : this.treeRoot), condition));
+        this.treeRoot.forEach(function (item) {
+            stack.push(item);
+        });
+        var item, children;
+        while (stack.length) {
+            item = stack.shift();
+            children = item[this.treeMap.children];
+            if (children && children.length) {
+                vals = vals.concat(this.filter(children, condition));
+                stack = stack.concat(item.children);
+            }
+        }
+        return vals;
+    };
+    NgTree.prototype.filter = function (nodes, condition, ignoreCase) {
+        nodes = nodes || this.treeRoot;
+        if (!condition)
+            return nodes;
+        var argType = typeof condition;
+        if (argType == "string") {
+            condition = condition.trim();
+            if (condition == "") {
+                return nodes;
+            }
+            if (ignoreCase) {
+                condition = condition.toUpperCase();
+            }
+            return nodes.filter(function (o) {
+                if (!o)
+                    return;
+                var val;
+                return Object.keys(o).some(function (k) {
+                    val = o[k];
+                    if (typeof val == "string") {
+                        if (ignoreCase) {
+                            return val.toUpperCase().indexOf(condition) > -1;
+                        }
+                        else {
+                            return val.indexOf(condition) > -1;
+                        }
+                    }
+                    else {
+                        return false;
+                    }
+                });
+            });
+        }
+        else if (argType === 'object') {
+            return nodes.filter(function (o) {
+                if (!o)
+                    return o;
+                return Object.keys(condition).every(function (k) {
+                    return o[k] == condition[k];
+                });
+            });
+        }
+        else {
+            return nodes;
+        }
+    };
     NgTree.prototype.findNodeSiblings = function (node) {
         if (!this.treeRoot) {
             console.error("please find from tree root");
@@ -226,4 +294,3 @@ NgTree = NgTree_1 = __decorate([
 ], NgTree);
 exports.NgTree = NgTree;
 var NgTree_1;
-//# sourceMappingURL=ng.tree.js.map

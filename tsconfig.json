@@ -8,9 +8,9 @@
 		"noImplicitAny": true,
 		"removeComments": true,
 		"target": "es5",
-		"sourceMap": true,
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
+		"watch": true,
 		"lib": [
 			"es2017",
 			"dom"

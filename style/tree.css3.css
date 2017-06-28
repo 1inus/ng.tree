@@ -3,13 +3,12 @@ ngTree {
   margin: 0;
   padding: 0;
   display: block;
-  font-size: 18px;
+  font-size: 20px;
   overflow-y: hidden;
   -webkit-transition: max-height 0.2s;
   /* Safari */
   transition: height .2s;
   overflow: hidden;
-  font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
   text-align: left!important;
 }
 ngTree > * {
@@ -33,8 +32,8 @@ ngTree > * {
   -o-transform: scale(1, 1);
 }
 .sub_ngtree {
-  background: url(icon/images/point.svg) repeat-y 0 0;
-  background-size: 1em;
+  background: url("tree_conect0.svg") repeat-y 0 0;
+  background-size: 1em 0.1em;
 }
 .ngtree_node_info.ngtree_closed + .sub_ngtree {
   display: none;
@@ -42,14 +41,9 @@ ngTree > * {
 .ngtree_node_info {
   white-space: nowrap;
   cursor: default;
-  line-height: 0;
-}
-.ngtree_node_info .ngtree_connect,
-.ngtree_node_info .ngtree_node_icon,
-.ngtree_node_info .ngtree_node_name,
-.ngtree_node_info .ngtree_node_toolbar {
-  display: inline-block;
-  vertical-align: middle;
+  line-height: 1em;
+  display: flex;
+  align-items: center;
 }
 .ngtree_node_info:hover .ngtree_node_toolbar div {
   transform: scale(1, 1);
@@ -62,12 +56,13 @@ ngTree > * {
   -o-transform: scale(1, 1);
 }
 .ngtree_node_info_wraper {
-  display: inline-block;
-  vertical-align: middle;
-  font-size: 0.8em;
-  padding: 0 0 0 0.05em;
+  display: flex;
+  align-items: center;
+  font-size: 1em;
   outline: 1px transparent solid;
   box-sizing: border-box;
+  overflow: hidden;
+  flex: 1;
 }
 .ngtree_node_info_wraper:hover {
   background: rgba(253, 228, 175, 0.1);
@@ -85,7 +80,7 @@ ngTree > * {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url(folder_back.png) no-repeat center center;
+  background: url(folder_back.svg) no-repeat center center;
   background-size: 0.9em auto;
   z-index: -1;
 }
@@ -95,7 +90,7 @@ ngTree > * {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url(folder_front.png) no-repeat center center;
+  background: url(folder_front.svg) no-repeat center center;
   background-size: 0.9em auto;
   -moz-transform: rotateX(0);
   -webkit-transform: rotateX(0);
@@ -116,18 +111,22 @@ ngTree > * {
 .ngtree_node_name {
   font-size: 0.8em;
   padding: 0 0.1em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
 }
 /*文件*/
 .ngtree_node_info .ngtree_connect {
-  background-position: 0 0;
+  background: url("tree_conect5.svg") no-repeat center center;
 }
 /*文件夹-关闭*/
 .ngtree_node_info.ngtree_folder .ngtree_connect {
-  background-position: 12.5% 0;
+  background: url("tree_conect2.svg") no-repeat center center;
 }
 /*文件夹-打开*/
 .ngtree_node_info.ngtree_folder.ngtree_node_open .ngtree_connect {
-  background-position: 25% 0;
+  background: url("tree_conect1.svg") no-repeat center center;
 }
 .ngtree_node {
   /*最后的-文件*/
@@ -135,13 +134,13 @@ ngTree > * {
   /*最后的-文件夹-打开*/
 }
 .ngtree_node:last-child > .ngtree_node_info .ngtree_connect {
-  background-position: 37.5% 0;
+  background: url("tree_conect6.svg") no-repeat center center;
 }
 .ngtree_node:last-child > .ngtree_folder .ngtree_connect {
-  background-position: 62.5% 0;
+  background: url("tree_conect3.svg") no-repeat center center;
 }
 .ngtree_node:last-child > .ngtree_folder.ngtree_node_open .ngtree_connect {
-  background-position: 50% 0;
+  background: url("tree_conect4.svg") no-repeat center center;
 }
 .ngtree_node:last-child > .sub_ngtree {
   background: none;
@@ -152,13 +151,14 @@ ngTree > * {
   width: 1em;
   -webkit-user-select: none;
   user-select: none;
-  background-image: url(icon/images/icons.svg);
-  background-repeat: no-repeat;
-  background-size: 900% 200%;
-  background-position: 50% 100%;
+}
+.ngtree_connect {
+  padding: 0.05em 0;
+  box-sizing: content-box;
 }
 .ngtree_node_icon {
-  margin: 0 0.125em;
+  margin-right: 0.1em;
+  background: url("document.svg") no-repeat center center;
 }
 .ngtree_node_icon.tree_icon_hide {
   width: 0;
@@ -166,15 +166,15 @@ ngTree > * {
 }
 .ngtree_node_toolbar {
   margin-left: 8px;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  overflow: hidden;
 }
 .ngtree_node_toolbar div {
-  display: inline-block;
-  font-size: .8em;
   width: 1em;
   height: 1em;
-  vertical-align: middle;
   margin: 0 2px;
-  user-select: none;
   -ms-transform: scale(0, 0);
   /* IE 9 */
   -moz-transform: scale(0, 0);
