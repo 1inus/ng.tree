@@ -62,7 +62,37 @@ export interface TreeConfig {
 	 * @param node
 	 * @param toolName
 	 */
-	onToolClick? : (node?:any, toolName?:string) => void;
+	onToolClick? : (event:MouseEvent , node?:any, toolName?:string) => void;
+
+	/**
+	 * @param event dragstart event object
+	 * @param node 
+	 * @param parent node parent
+	 * @param siblings node siblings
+	 * @param index node index
+	 */
+	onDragstart? : (event:MouseEvent , node?:any, parent?:any, siblings?:any, index?:number) => void;
+
+	/**
+	 * @param event drop event object
+	 * @param node 
+	 * @param parent node parent
+	 * @param siblings node siblings
+	 * @param index node index
+	 * @param position "top", "middle", "bottom"
+	 */
+	onDrop? : (event:MouseEvent , node?:any, parent?:any, sibliings?:any, index?:number, position?:string) => void;
+
+	/**
+	 * @param event dragover event object
+	 * @param node 
+	 * @param parent node parent
+	 * @param siblings node siblings
+	 * @param index node index
+	 * 
+	 * @return return true to enable drop
+	 */
+	onDragover? : (event:Event, node?:any, parent?:any, sibliing?:any, index?:number) => boolean;
 	
 	/**
 	 * TODO
@@ -136,29 +166,38 @@ export interface TreeConfig {
 @Component({
 	selector: 'ngTree',
 	template:
-'<div class="ngtree_node" *ngFor="let n of tData">'+
-	'<div class="ngtree_node_info"'+
-	'[ngClass]="{ngtree_folder: n[treeMap.children], ngtree_node_open:n[treeMap.isOpen], ngtree_node_selected:n[treeMap.isChecked]}">'+
-		'<div class="ngtree_connect" (click)="openNode(n, $event)"></div>'+
-		'<div (click)="nodeClick(n, $event);" class="ngtree_node_info_wraper">'+
-			'<div class="{{n[treeMap.iconClass]}} ngtree_node_icon {{!(n[treeMap.iconClass])?\'ngtree_folder_icon\':\'\'}}"'+
-				'[ngClass]="{tree_icon_hide:n[treeMap.iconClass]==false}"></div>'+
-			'<div class="ngtree_node_name {{n[treeMap.nameClass]}}">{{n[treeMap.name]}}</div>' +
-			'<div class="ngtree_node_toolbar" (click)="onEdit(n, $event)" *ngIf="n[treeMap.enableTools]!=false && (treeConfig.tools||treeData.tools)">' +
-				'<div class="{{t.name}}" *ngFor="let t of (n[treeMap.tools] || treeConfig.tools)" title="{{t.title}}"></div>' +
-			'</div>'+
-		'</div>'+
-	'</div>'+
-	'<ngTree '+
-		'class="sub_ngtree"'+
-		'[isSub]="true"'+
-		'[parent]="n"'+
-		'[treeMap]="treeMap"'+
-		'[treeConfig]="treeConfig"'+
-		'[treeContext]="treeContext"'+
-		'[isOpen]="n[treeMap.isOpen]"'+
-		'[(treeData)]="n[treeMap.children]"></ngTree>'+
-'</div>'
+`<div class="ngtree_node" *ngFor="let n of tData;let i = index">
+	<div class="ngtree_node_info"
+	draggable="true"
+
+	(drop)="drop($event, n, i, tData.length)"
+	(dragend)="dragend($event, n, i, tData.length)"
+	(dragover)="dragover($event, n, i, tData.length)"
+	(dragstart)="dragstart($event, n, i, tData.length)"
+	(dragenter)="dragenter($event, n, i, tData.length)"
+	(dragleave)="dragleave($event, n, i, tData.length)"
+
+	[ngClass]="{ngtree_folder: n[treeMap.children], ngtree_node_open:n[treeMap.isOpen], ngtree_node_selected:n[treeMap.isChecked]}">
+		<div class="ngtree_connect" (click)="openNode(n, $event)"></div>
+		<div (click)="nodeClick(n, $event)" class="ngtree_node_info_wraper">
+			<div class="{{n[treeMap.iconClass]}} ngtree_node_icon {{!(n[treeMap.iconClass])?'ngtree_folder_icon':''}}"
+				[ngClass]="{tree_icon_hide:n[treeMap.iconClass]==false}"></div>
+			<div class="ngtree_node_name {{n[treeMap.nameClass]}}">{{n[treeMap.name]}}</div>
+			<div class="ngtree_node_toolbar" (click)="onEdit(n, $event)" *ngIf="n[treeMap.enableTools]!=false && (treeConfig.tools||treeData.tools)">
+				<div class="{{t.name}}" *ngFor="let t of (n[treeMap.tools] || treeConfig.tools)" title="{{t.title}}"></div>
+			</div>
+		</div>
+	</div>
+	<ngTree 
+		class="sub_ngtree"
+		[isSub]="true"
+		[parent]="n"
+		[treeMap]="treeMap"
+		[treeConfig]="treeConfig"
+		[treeContext]="treeContext"
+		[isOpen]="n[treeMap.isOpen]"
+		[(treeData)]="n[treeMap.children]"></ngTree>
+</div>`
 })
 export class NgTree {
 	static DATAMAP:any = {
@@ -173,7 +212,6 @@ export class NgTree {
 	}
 	
 	private treeElement:any;
-
 	private treeRoot:any;
 	
 	constructor(view:ViewContainerRef){
@@ -391,7 +429,8 @@ export class NgTree {
 			let defaultMap = Object.assign({}, NgTree.DATAMAP);
 			this.treeMap = this.treeConfig ? Object.assign(defaultMap, this.treeConfig.dataMap):defaultMap;
 			this.treeContext = {
-				nodeSelected:[]
+				nodeSelected:[],
+				treeRootElement:this.treeElement
 			}
 		}
 		
@@ -453,5 +492,145 @@ export class NgTree {
 		}
 		
 		return false;
+	}
+
+
+	private dragstart(e:any, node:any, index:any){
+		e.stopPropagation();
+		
+		this.treeContext.treeRootElement.classList.add("ngtree_dragging");
+		e.dataTransfer.setDragImage(e.target.querySelector(".ngtree_node_info_wraper"), -10, 10);
+
+		this.treeContext.dragNode = node;
+		this.treeContext.partUnit = e.target.clientHeight/3;
+		this.treeContext.dragstartData = {
+			node:node,
+			index:index,
+			parent:this.parent,
+			siblings:this.treeData
+		};
+		e.target.parentNode.classList.add("ngtree_dragging_node");
+
+		if(this.treeConfig.onDragstart){
+			this.treeConfig.onDragstart(e, node, this.parent, this.treeData, index);
+		}
+	}
+
+	private dragenter(e:any, node:any){
+		e.stopPropagation();
+		if(node != this.treeContext.dragNode){
+			e.target.classList.add("ngtree_enter_node");
+		}
+	}
+
+	private dragleave(e:any, node:any){
+		e.stopPropagation();
+		if(node != this.treeContext.dragNode){
+			e.target.classList.remove("ngtree_enter_node");
+
+			let pl = e.target.parentNode.classList;
+			pl.remove("ngtree_drag_top");
+			pl.remove("ngtree_drag_bottom");
+			pl.remove("ngtree_drag_middle");
+		}
+		delete this.treeContext.dropPosition;
+	}
+
+	private dragover(e:any, node:any, index:number, max:number){
+		e.stopPropagation();
+		if(node != this.treeContext.dragNode){
+			let parent = e.target.parentNode,
+				pl = parent.classList;
+
+			this.treeContext.dragoverTarget = parent;
+
+			if(e.offsetY<this.treeContext.partUnit){
+				if(index==0 || this.tData[index-1]!=this.treeContext.dragstartData.node){
+					this.treeContext.dropPosition = "top";
+					pl.add("ngtree_drag_top");
+					pl.remove("ngtree_drag_bottom");
+					pl.remove("ngtree_drag_middle");
+				}
+			} else if(e.offsetY>this.treeContext.partUnit*2){
+				if(index==this.tData.length || this.tData[index+1]!=this.treeContext.dragstartData.node){
+					this.treeContext.dropPosition = "bottom";
+					pl.add("ngtree_drag_bottom");
+					pl.remove("ngtree_drag_top");
+					pl.remove("ngtree_drag_middle");
+				}
+			} else {
+				this.treeContext.dropPosition = "middle";
+				pl.add("ngtree_drag_middle");
+				pl.remove("ngtree_drag_top");
+				pl.remove("ngtree_drag_bottom");
+			}
+
+			if(this.treeConfig.onDragover){
+				if(this.treeConfig.onDragover(e, node, this.parent, this.treeData, index)){
+					e.preventDefault();
+				}
+			} else {
+				e.preventDefault();
+			}
+		}
+
+	}
+
+	private drop(e:any, node:any, index:any){
+		e.stopPropagation();
+
+		this.treeContext.dropData = {
+			node:node,
+			index:index,
+			parent:this.parent,
+			siblings:this.treeData,
+			dropPosition:this.treeContext.dropPosition
+		};
+
+		delete this.treeContext.dragNode;
+
+		if(this.treeConfig.onDragover){
+			this.treeConfig.onDragover(e, node, this.parent, this.treeData, index);
+		}
+
+		if(this.treeConfig.onDrop){
+			this.treeConfig.onDrop(e, node, this.parent, this.treeData, index, this.treeContext.dropPosition);
+		}
+
+		this.treeContext.treeRootElement.classList.remove("ngtree_dragging");
+		let old = document.querySelector(".ngtree_enter_node");
+		if(old){
+			old.classList.remove("ngtree_enter_node");
+		}
+		old = document.querySelector(".ngtree_dragging_node");
+		if(old){
+			old.classList.remove("ngtree_dragging_node");
+		}
+		
+		if(this.treeContext.dragoverTarget){
+			var l = this.treeContext.dragoverTarget.classList;
+			l.remove("ngtree_drag_top");
+			l.remove("ngtree_drag_bottom");
+			l.remove("ngtree_drag_middle");
+		}
+	}
+
+	private dragend(e:any, node:any, index:any){
+		this.treeContext.treeRootElement.classList.remove("ngtree_dragging");
+		let old = document.querySelector(".ngtree_enter_node");
+		if(old){
+			old.classList.remove("ngtree_enter_node");
+		}
+		old = document.querySelector(".ngtree_dragging_node");
+		if(old){
+			old.classList.remove("ngtree_dragging_node");
+		}
+		
+		if(this.treeContext.dragoverTarget){
+			var l = this.treeContext.dragoverTarget.classList;
+			l.remove("ngtree_drag_top");
+			l.remove("ngtree_drag_bottom");
+			l.remove("ngtree_drag_middle");
+		}
 	}
 }

@@ -1,6 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
-var TypedocWebpackPlugin = require('typedoc-webpack-plugin');
+//var TypedocWebpackPlugin = require('typedoc-webpack-plugin');
 
 module.exports = {
 	entry: {

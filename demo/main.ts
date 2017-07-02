@@ -10,18 +10,8 @@ import {NgTree} from "../ng.tree";
 	selector: '.demos',
 	template: `
 		<div class="demo demo1">
-			<h2>ordinary ng-tree</h2>
 			<ngTree #treeNo1 [treeData]="treeData" [treeConfig]="treeConfig"></ngTree>
-		</div>
-		<div class="demo demo2">
-			<h2>custom icon</h2>
-			<ngTree [treeData]="treeData1" [treeConfig]="treeConfig1"></ngTree>
-		</div>
-		<div class="demo demo3">
-			<h2>custom edit tool</h2>
-			<ngTree [treeData]="treeData1" [treeConfig]="treeConfig2"></ngTree>
-		</div>
-	`
+		</div>`
 })
 class App {
 	@ViewChild('treeNo1')
@@ -55,92 +45,38 @@ class App {
 		}]
 	}];
 	
+	private dragstartData;
 	public treeConfig : any = {
 		/*open or close tree node*/
 		onFold : (node:any):boolean => {
-			console.log(this.treeNo1.searchNodes(null, {name:"我的"}));
+			console.log(this.treeNo1.searchNodes(null, {name:"我的电脑"}));
 			return true;
-		}
-	}
-	
-	
-	/*demo1*/
-	public treeData1: any[] = [{
-		name: "我的电脑",
-		isOpen:true,
-		iconClass:"icon_computer",
-		nameClass:"warning",
-		enableTool:false,
-		children:[{
-			name: 'secret🤐',
-			iconClass:"icon_folder_lock",
-			enableTool:false
-		},{
-			name: 'photos',
-			iconClass:"icon_photo",
-			enableTool:false
-		}]
-	}, {
-		name:"✌nice day✌",
-		iconClass:"icon_sunny",
-		enableTool:false,
-		isOpen:true,
-		children:[
-			{name:"😀",iconClass:false,isChecked:true},{name:"😍",iconClass:false},{name:"🚴",iconClass:false},
-			{name:"😘",iconClass:false},{name:"😴",iconClass:false}]
-	}];
-	
-	public treeConfig1 : any = {
-		/*open or close tree node*/
-		onFold : (node:any):boolean => {
-			if(!node.isOpen && node.iconClass=="icon_cloud"){
-				let icon = node.iconClass;
-				node.iconClass = "icon_sunny";
-				return false;
+		},
+		onDragover:(e:MouseEvent, node:any, parent:any, siblings:any, index:number)=>{
+			return true;
+		},
+		onDrop:(e:MouseEvent, node:any, parent:any, siblings:any, index:number, position:string)=>{
+			if(position == "top") {
+				this.dragstartData.siblings.splice(this.dragstartData.index, 1);
+				siblings.splice(siblings.indexOf(node), 0, this.dragstartData.node);
+			} else if(position == "bottom"){
+				this.dragstartData.siblings.splice(this.dragstartData.index, 1);
+				siblings.splice(siblings.indexOf(node)+1, 0, this.dragstartData.node);
 			} else {
-				return true;
-			}
-		},
-		
-		/*before node render*/
-		dataFilter : (data:any) => {
-			return data;
-		},
-		
-		onToolClick:function(node:any, toolName:any){
-			/*do something*/
-			console.log(node, name);
-		}
-	}
-	
-	public treeConfig2 : any = {
-		tools:[
-			{name:"icon-plus", title:"添加"},
-			{name:"icon-edit", title:"编辑"},
-			{name:"icon-bin", title:"删除"}],
-			
-		onToolClick:(node:any, name:any)=>{
-			if(name=="icon-plus"){
 				node.children = node.children || [];
-				node.children.push({
-					name : node.name,
-					enableTool:false,
-					iconClass:false
-				});
-			} else if(name=="icon-edit"){
-				node.name = (new Date().getTime()).toString().substring(8, 13);
-			} else {
-				let index = node.ngTreeNodeParent.children.indexOf(node);
-				node.ngTreeNodeParent.children.splice(index, 1);
-				return true;
+				node.children.push(this.dragstartData.node);
+				this.dragstartData.siblings.splice(this.dragstartData.index, 1);
+			}
+		},
+		onDragstart:(e:MouseEvent, node:any, parent:any, siblings:any, index:number)=>{
+			this.dragstartData = {
+				node:node,
+				parent:parent,
+				siblings:siblings,
+				index:index
 			}
 		}
 	}
-	
-	/**/
-	public treeMap = {
-		children:"children"
-	};
 }
 
 @NgModule({

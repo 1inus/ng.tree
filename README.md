@@ -46,6 +46,9 @@ data for creating tree
 
 * <code>onFold? : (node?:any) => boolean;</code>,execute before treenode collapse or uncollapse, returns false to disable the default action
 * <code>onClick? : (node?:any) => void;</code>,trigger on icon or name click
+* <code>onDragstart? : (event:MouseEvent , node?:any, parent?:any, siblings?:any, index?:number) => void;</code>
+* <code>onDrop? : (event:MouseEvent , node?:any, parent?:any, sibliings?:any, index?:number, position?:string) => void;</code>
+* <code>onDragover? : (event:Event, node?:any, parent?:any, sibliing?:any, index?:number) => boolean;</code>,return true to enable drop
 * <code>onToolClick? : (node?:any, toolname?:string) => void;</code>trigger on tool button click
 * <code>dataFilter?: (nodeData?:any) => any</code>,format customized data to TreeData. effect on tree init
 * <code>tools?: {name:string, title?:string}[]</code>,customized edit button

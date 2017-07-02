@@ -4,12 +4,11 @@ ngTree {
   padding: 0;
   display: block;
   font-size: 20px;
-  overflow-y: hidden;
   -webkit-transition: max-height 0.2s;
   /* Safari */
   transition: height .2s;
-  overflow: hidden;
   text-align: left!important;
+  overflow: hidden;
 }
 ngTree > * {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -38,12 +37,28 @@ ngTree > * {
 .ngtree_node_info.ngtree_closed + .sub_ngtree {
   display: none;
 }
+.ngtree_dragging .ngtree_node_info:before {
+  width: 100%;
+}
 .ngtree_node_info {
   white-space: nowrap;
   cursor: default;
   line-height: 1em;
   display: flex;
   align-items: center;
+  position: relative;
+}
+.ngtree_node_info:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 0;
+}
+.ngtree_node_info.ngtree_enter_node {
+  background: rgba(221, 221, 221, 0.3);
 }
 .ngtree_node_info:hover .ngtree_node_toolbar div {
   transform: scale(1, 1);
@@ -128,7 +143,17 @@ ngTree > * {
 .ngtree_node_info.ngtree_folder.ngtree_node_open .ngtree_connect {
   background: url("tree_conect1.svg") no-repeat center center;
 }
+/*拖动的文件夹关闭*/
+.ngtree_dragging_node .ngtree_node_info.ngtree_folder .ngtree_connect {
+  background: url("tree_conect2.svg") no-repeat center center;
+}
+.ngtree_dragging_node .ngtree_folder .ngtree_folder_icon:after {
+  -moz-transform: rotateX(0);
+  -webkit-transform: rotateX(0);
+  transform: rotateX(0);
+}
 .ngtree_node {
+  position: relative;
   /*最后的-文件*/
   /*最后的-文件夹*/
   /*最后的-文件夹-打开*/
@@ -183,4 +208,55 @@ ngTree > * {
   /* Safari 和 Chrome */
   -o-transform: scale(0, 0);
   transform: scale(0, 0);
+}
+.ngtree_dragging_node ngTree {
+  height: 0!important;
+}
+.ngtree_drag_middle {
+  z-index: 100;
+}
+.ngtree_drag_middle:before {
+  z-index: 50;
+  pointer-events: none;
+  content: "";
+  display: block;
+  width: 0.5em;
+  height: 0.5em;
+  left: 0;
+  position: absolute;
+  top: 0.5em;
+  transform: translate(120%, -50%);
+  background-image: url('arrow.svg');
+  background-repeat: no-repeat;
+  background-color: inherit;
+  background-size: 100% 100%;
+  background-position: 0 0.01em;
+  animation: ngtree-blink-arrow 0.8s linear infinite;
+}
+.ngtree_drag_top:after,
+.ngtree_drag_bottom:after {
+  content: "";
+  position: absolute;
+  background: #d4237a;
+  left: 1em;
+  right: 50%;
+  pointer-events: none;
+  height: 1px;
+  animation: ngtree-blinker 1s linear infinite;
+}
+.ngtree_drag_top:after {
+  top: 0;
+}
+.ngtree_drag_bottom:after {
+  bottom: 0;
+}
+@keyframes ngtree-blinker {
+  50% {
+    opacity: .2;
+  }
+}
+@keyframes ngtree-blink-arrow {
+  50% {
+    background-position: 2px 0.01em;
+  }
 }
