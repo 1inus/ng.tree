@@ -8,7 +8,8 @@ rename from angular4-tree to ng.tree!
 
 ![screenshot](https://1inus.github.io/ng-tree-site/screenshot.png)
 ![screenshot](https://1inus.github.io/ng-tree-site/screenshot1.png)
-
+![screenshot](https://1inus.github.io/ng-tree-site/screenshot2.png)
+![screenshot](https://1inus.github.io/ng-tree-site/screenshot3.png)
 # NPM
 ```
 npm install ng.tree

@@ -116,6 +116,8 @@ export interface TreeConfig {
 	 *
 	 */
 	enableTools?: boolean;
+
+	enableDrag?:boolean;
 	
 	/**
 	 * format customized data to TreeData
@@ -168,8 +170,8 @@ export interface TreeConfig {
 	template:
 `<div class="ngtree_node" *ngFor="let n of tData;let i = index">
 	<div class="ngtree_node_info"
-	draggable="true"
-
+	[attr.draggable]="treeConfig.enableDrag ? true:false"
+	
 	(drop)="drop($event, n, i, tData.length)"
 	(dragend)="dragend($event, n, i, tData.length)"
 	(dragover)="dragover($event, n, i, tData.length)"

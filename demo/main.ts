@@ -45,8 +45,9 @@ class App {
 		}]
 	}];
 	
-	private dragstartData;
+	private dragstartData:any;
 	public treeConfig : any = {
+		enableDrag:true,
 		/*open or close tree node*/
 		onFold : (node:any):boolean => {
 			console.log(this.treeNo1.searchNodes(null, {name:"我的电脑"}));

@@ -1,35 +1,36 @@
 {
-  "name": "ng.tree",
-  "version": "3.0.13",
-  "description": "",
-  "main": "ng.tree.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "angular2",
-    "angular4",
-    "tree"
-  ],
-  "author": "cnliangwei@foxmail.com",
-  "license": "Apache",
-  "dependencies": {
-    "@angular/common": "^4.2.4",
-    "@angular/compiler": "^4.2.4",
-    "@angular/core": "^4.2.4",
-    "@angular/forms": "^4.2.4",
-    "@angular/http": "^4.2.4",
-    "@angular/platform-browser": "^4.2.4",
-    "@angular/platform-browser-dynamic": "^4.2.4",
-    "reflect-metadata": "^0.1.10",
-    "rxjs": "^5.4.1",
-    "zone.js": "^0.8.12"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/1inus/ng.tree.git"
-  },
-  "devDependencies": {
-    "ts-loader": "^2.2.0"
-  }
+	"name": "ng.tree",
+	"version": "3.0.18",
+	"description": "",
+	"main": "ng.tree.js",
+	"types": "ng.tree.d.ts",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [
+		"angular2",
+		"angular4",
+		"tree"
+	],
+	"author": "cnliangwei@foxmail.com",
+	"license": "Apache",
+	"dependencies": {
+		"@angular/common": "^4.2.4",
+		"@angular/compiler": "^4.2.4",
+		"@angular/core": "^4.2.4",
+		"@angular/forms": "^4.2.4",
+		"@angular/http": "^4.2.4",
+		"@angular/platform-browser": "^4.2.4",
+		"@angular/platform-browser-dynamic": "^4.2.4",
+		"reflect-metadata": "^0.1.10",
+		"rxjs": "^5.4.1",
+		"zone.js": "^0.8.12"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/1inus/ng.tree.git"
+	},
+	"devDependencies": {
+		"ts-loader": "^2.2.0"
+	}
 }
