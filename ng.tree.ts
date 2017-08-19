@@ -110,7 +110,7 @@ export interface TreeConfig {
 	/**
 	 *
 	 */
-	tools?: { name: string, title?: string }[];
+	tools?: { name: string, iconClass: string, title?: string }[];
 
 	/**
 	 *
@@ -171,7 +171,6 @@ export interface TreeConfig {
 	`<div class="ngtree_node" *ngFor="let n of tData;let i = index">
 	<div class="ngtree_node_info"
 	[attr.draggable]="treeConfig.enableDrag ? true:false"
-	
 	(drop)="drop($event, n, i, tData.length)"
 	(dragend)="dragend($event, n, i, tData.length)"
 	(dragover)="dragover($event, n, i, tData.length)"
@@ -186,7 +185,7 @@ export interface TreeConfig {
 				[ngClass]="{tree_icon_hide:n[treeMap.iconClass]==false}"></div>
 			<div class="ngtree_node_name {{n[treeMap.nameClass]}}">{{n[treeMap.name]}}</div>
 			<div class="ngtree_node_toolbar" (click)="onEdit(n, $event)" *ngIf="n[treeMap.enableTools]!=false && (treeConfig.tools||treeData.tools)">
-				<div class="{{t.name}}" *ngFor="let t of (n[treeMap.tools] || treeConfig.tools)" title="{{t.title}}"></div>
+				<div class="{{t.iconClass}}" [attr.data-name]="t.name" *ngFor="let t of (n[treeMap.tools] || treeConfig.tools)" title="{{t.title}}"></div>
 			</div>
 		</div>
 	</div>
@@ -204,12 +203,12 @@ export interface TreeConfig {
 export class NgTree {
 	static DATAMAP: any = {
 		name: "name",
+		tools: "tools",
 		isOpen: "isOpen",
+		children: "children",
 		iconClass: "iconClass",
 		nameClass: "nameClass",
-		children: "children",
 		isChecked: "isChecked",
-		tools: "tools",
 		enableTools: "enableTool"
 	}
 
@@ -490,7 +489,7 @@ export class NgTree {
 	private onEdit(node: any, e: any) {
 		e.stopPropagation();
 		if (this.treeConfig && this.treeConfig.onToolClick) {
-			this.treeConfig.onToolClick(node, e.target.className);
+			this.treeConfig.onToolClick(node, e.target.dataset.name);
 		}
 
 		return false;

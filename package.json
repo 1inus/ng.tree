@@ -1,6 +1,6 @@
 {
 	"name": "ng.tree",
-	"version": "3.0.20",
+	"version": "3.1.2",
 	"description": "",
 	"main": "ng.tree.js",
 	"types": "ng.tree.d.ts",

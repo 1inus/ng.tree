@@ -41,7 +41,7 @@ data for creating tree
 * <code class="lang-TypeScript">nameClass?:string</code>,a class selector add to name element
 * <code class="lang-TypeScript">children?:TreeData[]</code>,sub tree data
 * <code class="lang-TypeScript">isChecked?:boolean</code>,is checked
-* <code class="lang-TypeScript">tools?: {name:string, title?:string}[]</code>,customized edit button
+* <code class="lang-TypeScript">tools?: {name:string, iconClass:string, title?:string}[]</code>,customized edit button
 
 ## TreeConfig
 
@@ -52,7 +52,7 @@ data for creating tree
 * <code>onDragover? : (event:Event, node?:any, parent?:any, sibliing?:any, index?:number) => boolean;</code>,return true to enable drop
 * <code>onToolClick? : (node?:any, toolname?:string) => void;</code>trigger on tool button click
 * <code>dataFilter?: (nodeData?:any) => any</code>,format customized data to TreeData. effect on tree init
-* <code>tools?: {name:string, title?:string}[]</code>,customized edit button
+* <code>tools?: {name:string, iconClass:string, title?:string}[]</code>,customized edit button
 * <code>enableTools?:boolean</code>,enable toolbar or not
 * <code>dataMap?any</code>,format customized data to TreeData
 	* <code>dataMap.name?:string</code>,default to "name"

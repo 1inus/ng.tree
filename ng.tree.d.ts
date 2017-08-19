@@ -22,6 +22,7 @@ export interface TreeConfig {
     dataFilter?: (nodeData?: any) => any;
     tools?: {
         name: string;
+        iconClass: string;
         title?: string;
     }[];
     enableTools?: boolean;
