@@ -1,6 +1,6 @@
 {
 	"name": "ng.tree",
-	"version": "3.0.18",
+	"version": "3.0.20",
 	"description": "",
 	"main": "ng.tree.js",
 	"types": "ng.tree.d.ts",
@@ -14,7 +14,11 @@
 	],
 	"author": "cnliangwei@foxmail.com",
 	"license": "Apache",
-	"dependencies": {
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/1inus/ng.tree.git"
+	},
+	"devDependencies": {
 		"@angular/common": "^4.2.4",
 		"@angular/compiler": "^4.2.4",
 		"@angular/core": "^4.2.4",
@@ -24,13 +28,9 @@
 		"@angular/platform-browser-dynamic": "^4.2.4",
 		"reflect-metadata": "^0.1.10",
 		"rxjs": "^5.4.1",
+		"ts-loader": "^2.2.0",
+		"typescript": "^2.4.2",
+		"webpack": "^3.5.5",
 		"zone.js": "^0.8.12"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/1inus/ng.tree.git"
-	},
-	"devDependencies": {
-		"ts-loader": "^2.2.0"
 	}
 }

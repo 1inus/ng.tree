@@ -10,11 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var NgTree = NgTree_1 = (function () {
+var NgTree = (function () {
     function NgTree(view) {
         this.nodeCount = 0;
         this.treeElement = view.element.nativeElement;
     }
+    NgTree_1 = NgTree;
     NgTree.prototype.searchNodes = function (nodes, condition, ignoreCase) {
         if (!this.treeRoot) {
             console.error("please search from tree root");
@@ -226,6 +227,12 @@ var NgTree = NgTree_1 = (function () {
     };
     NgTree.prototype.dragstart = function (e, node, index) {
         e.stopPropagation();
+        if (this.treeConfig.onDragstart) {
+            if (!this.treeConfig.onDragstart(e, node, this.parent, this.treeData, index)) {
+                e.preventDefault();
+                return;
+            }
+        }
         this.treeContext.treeRootElement.classList.add("ngtree_dragging");
         e.dataTransfer.setDragImage(e.target.querySelector(".ngtree_node_info_wraper"), -10, 10);
         this.treeContext.dragNode = node;
@@ -237,9 +244,6 @@ var NgTree = NgTree_1 = (function () {
             siblings: this.treeData
         };
         e.target.parentNode.classList.add("ngtree_dragging_node");
-        if (this.treeConfig.onDragstart) {
-            this.treeConfig.onDragstart(e, node, this.parent, this.treeData, index);
-        }
     };
     NgTree.prototype.dragenter = function (e, node) {
         e.stopPropagation();
@@ -344,52 +348,52 @@ var NgTree = NgTree_1 = (function () {
             l.remove("ngtree_drag_middle");
         }
     };
+    NgTree.DATAMAP = {
+        name: "name",
+        isOpen: "isOpen",
+        iconClass: "iconClass",
+        nameClass: "nameClass",
+        children: "children",
+        isChecked: "isChecked",
+        tools: "tools",
+        enableTools: "enableTool"
+    };
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Object)
+    ], NgTree.prototype, "parent", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], NgTree.prototype, "isSub", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Array)
+    ], NgTree.prototype, "treeData", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Object)
+    ], NgTree.prototype, "treeContext", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Object)
+    ], NgTree.prototype, "treeConfig", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Object)
+    ], NgTree.prototype, "treeMap", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Object)
+    ], NgTree.prototype, "isOpen", void 0);
+    NgTree = NgTree_1 = __decorate([
+        core_1.Component({
+            selector: 'ngTree',
+            template: "<div class=\"ngtree_node\" *ngFor=\"let n of tData;let i = index\">\n\t<div class=\"ngtree_node_info\"\n\t[attr.draggable]=\"treeConfig.enableDrag ? true:false\"\n\t\n\t(drop)=\"drop($event, n, i, tData.length)\"\n\t(dragend)=\"dragend($event, n, i, tData.length)\"\n\t(dragover)=\"dragover($event, n, i, tData.length)\"\n\t(dragstart)=\"dragstart($event, n, i, tData.length)\"\n\t(dragenter)=\"dragenter($event, n, i, tData.length)\"\n\t(dragleave)=\"dragleave($event, n, i, tData.length)\"\n\n\t[ngClass]=\"{ngtree_folder: n[treeMap.children], ngtree_node_open:n[treeMap.isOpen], ngtree_node_selected:n[treeMap.isChecked]}\">\n\t\t<div class=\"ngtree_connect\" (click)=\"openNode(n, $event)\"></div>\n\t\t<div (click)=\"nodeClick(n, $event)\" class=\"ngtree_node_info_wraper\">\n\t\t\t<div class=\"{{n[treeMap.iconClass]}} ngtree_node_icon {{!(n[treeMap.iconClass])?'ngtree_folder_icon':''}}\"\n\t\t\t\t[ngClass]=\"{tree_icon_hide:n[treeMap.iconClass]==false}\"></div>\n\t\t\t<div class=\"ngtree_node_name {{n[treeMap.nameClass]}}\">{{n[treeMap.name]}}</div>\n\t\t\t<div class=\"ngtree_node_toolbar\" (click)=\"onEdit(n, $event)\" *ngIf=\"n[treeMap.enableTools]!=false && (treeConfig.tools||treeData.tools)\">\n\t\t\t\t<div class=\"{{t.name}}\" *ngFor=\"let t of (n[treeMap.tools] || treeConfig.tools)\" title=\"{{t.title}}\"></div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n\t<ngTree \n\t\tclass=\"sub_ngtree\"\n\t\t[isSub]=\"true\"\n\t\t[parent]=\"n\"\n\t\t[treeMap]=\"treeMap\"\n\t\t[treeConfig]=\"treeConfig\"\n\t\t[treeContext]=\"treeContext\"\n\t\t[isOpen]=\"n[treeMap.isOpen]\"\n\t\t[(treeData)]=\"n[treeMap.children]\"></ngTree>\n</div>"
+        }),
+        __metadata("design:paramtypes", [core_1.ViewContainerRef])
+    ], NgTree);
     return NgTree;
+    var NgTree_1;
 }());
-NgTree.DATAMAP = {
-    name: "name",
-    isOpen: "isOpen",
-    iconClass: "iconClass",
-    nameClass: "nameClass",
-    children: "children",
-    isChecked: "isChecked",
-    tools: "tools",
-    enableTools: "enableTool"
-};
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Object)
-], NgTree.prototype, "parent", void 0);
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Boolean)
-], NgTree.prototype, "isSub", void 0);
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Array)
-], NgTree.prototype, "treeData", void 0);
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Object)
-], NgTree.prototype, "treeContext", void 0);
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Object)
-], NgTree.prototype, "treeConfig", void 0);
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Object)
-], NgTree.prototype, "treeMap", void 0);
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Object)
-], NgTree.prototype, "isOpen", void 0);
-NgTree = NgTree_1 = __decorate([
-    core_1.Component({
-        selector: 'ngTree',
-        template: "<div class=\"ngtree_node\" *ngFor=\"let n of tData;let i = index\">\n\t<div class=\"ngtree_node_info\"\n\t[attr.draggable]=\"treeConfig.enableDrag ? true:false\"\n\t\n\t(drop)=\"drop($event, n, i, tData.length)\"\n\t(dragend)=\"dragend($event, n, i, tData.length)\"\n\t(dragover)=\"dragover($event, n, i, tData.length)\"\n\t(dragstart)=\"dragstart($event, n, i, tData.length)\"\n\t(dragenter)=\"dragenter($event, n, i, tData.length)\"\n\t(dragleave)=\"dragleave($event, n, i, tData.length)\"\n\n\t[ngClass]=\"{ngtree_folder: n[treeMap.children], ngtree_node_open:n[treeMap.isOpen], ngtree_node_selected:n[treeMap.isChecked]}\">\n\t\t<div class=\"ngtree_connect\" (click)=\"openNode(n, $event)\"></div>\n\t\t<div (click)=\"nodeClick(n, $event)\" class=\"ngtree_node_info_wraper\">\n\t\t\t<div class=\"{{n[treeMap.iconClass]}} ngtree_node_icon {{!(n[treeMap.iconClass])?'ngtree_folder_icon':''}}\"\n\t\t\t\t[ngClass]=\"{tree_icon_hide:n[treeMap.iconClass]==false}\"></div>\n\t\t\t<div class=\"ngtree_node_name {{n[treeMap.nameClass]}}\">{{n[treeMap.name]}}</div>\n\t\t\t<div class=\"ngtree_node_toolbar\" (click)=\"onEdit(n, $event)\" *ngIf=\"n[treeMap.enableTools]!=false && (treeConfig.tools||treeData.tools)\">\n\t\t\t\t<div class=\"{{t.name}}\" *ngFor=\"let t of (n[treeMap.tools] || treeConfig.tools)\" title=\"{{t.title}}\"></div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n\t<ngTree \n\t\tclass=\"sub_ngtree\"\n\t\t[isSub]=\"true\"\n\t\t[parent]=\"n\"\n\t\t[treeMap]=\"treeMap\"\n\t\t[treeConfig]=\"treeConfig\"\n\t\t[treeContext]=\"treeContext\"\n\t\t[isOpen]=\"n[treeMap.isOpen]\"\n\t\t[(treeData)]=\"n[treeMap.children]\"></ngTree>\n</div>"
-    }),
-    __metadata("design:paramtypes", [core_1.ViewContainerRef])
-], NgTree);
 exports.NgTree = NgTree;
-var NgTree_1;
