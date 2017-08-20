@@ -95,6 +95,17 @@ export interface TreeConfig {
 	onDragover?: (event: Event, node?: any, parent?: any, sibliing?: any, index?: number) => boolean;
 
 	/**
+	 * @param event dragover event object
+	 * @param node 
+	 * @param parent node parent
+	 * @param siblings node siblings
+	 * @param index node index
+	 * 
+	 * @return return true to enable drop
+	 */
+	onDragend?: (event: Event, node?: any, parent?: any, sibliing?: any, index?: number) => boolean;
+
+	/**
 	 * TODO
 	 */
 	/*onDrop? : (sourceNode?:any, targetNode?:any) => boolean;
@@ -583,7 +594,7 @@ export class NgTree {
 	}
 
 	private drop(e: any, node: any, index: any) {
-		e.stopPropagation();
+		//e.stopPropagation();
 
 		this.treeContext.dropData = {
 			node: node,
@@ -637,6 +648,10 @@ export class NgTree {
 			l.remove("ngtree_drag_top");
 			l.remove("ngtree_drag_bottom");
 			l.remove("ngtree_drag_middle");
+		}
+
+		if (this.treeConfig.onDragend) {
+			this.treeConfig.onDragend(e, node, this.parent, this.treeData, index);
 		}
 	}
 }

@@ -19,6 +19,7 @@ export interface TreeConfig {
     onDragstart?: (event: MouseEvent, node?: any, parent?: any, siblings?: any, index?: number) => boolean;
     onDrop?: (event: MouseEvent, node?: any, parent?: any, sibliings?: any, index?: number, position?: string) => void;
     onDragover?: (event: Event, node?: any, parent?: any, sibliing?: any, index?: number) => boolean;
+    onDragend?: (event: Event, node?: any, parent?: any, sibliing?: any, index?: number) => boolean;
     dataFilter?: (nodeData?: any) => any;
     tools?: {
         name: string;

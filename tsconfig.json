@@ -1,6 +1,7 @@
 {
 	"files": [
-		"ng.tree.ts"
+		"ng.tree.ts",
+		"demo/main.ts"
 	],
 	"compileOnSave": true,
 	"compilerOptions": {
@@ -11,7 +12,7 @@
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
 		"watch": true,
-		"declaration":true,
+		"declaration": true,
 		"lib": [
 			"es2017",
 			"dom"
@@ -24,5 +25,4 @@
 		"node_modules"
 	]
 }
-
 //dts-generator --project ./ --out index.d.ts

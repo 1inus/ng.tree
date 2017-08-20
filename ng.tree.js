@@ -300,7 +300,6 @@ var NgTree = (function () {
         }
     };
     NgTree.prototype.drop = function (e, node, index) {
-        e.stopPropagation();
         this.treeContext.dropData = {
             node: node,
             index: index,
@@ -346,6 +345,9 @@ var NgTree = (function () {
             l.remove("ngtree_drag_top");
             l.remove("ngtree_drag_bottom");
             l.remove("ngtree_drag_middle");
+        }
+        if (this.treeConfig.onDragend) {
+            this.treeConfig.onDragend(e, node, this.parent, this.treeData, index);
         }
     };
     NgTree.DATAMAP = {

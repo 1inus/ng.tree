@@ -4,7 +4,7 @@ import "zone.js";
 import { Component, NgModule, ViewChild, ElementRef, ViewContainerRef } from '@angular/core';
 import { BrowserModule } from "@angular/platform-browser";
 import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
-import { NgTree } from "../ng.tree";
+import { NgTree } from "../ng.tree"
 
 @Component({
 	selector: '.demos',
@@ -77,6 +77,9 @@ class App {
 				index: index
 			}
 			return true;
+		},
+		onDragend: (e: MouseEvent, node: any, parent: any, siblings: any, index: number) => {
+			console.log(node);
 		}
 	}
 }
@@ -87,5 +90,5 @@ class App {
 	declarations: [NgTree, App],
 	bootstrap: [App]
 })
-export class AppModule { }
+class AppModule { }
 platformBrowserDynamic().bootstrapModule(AppModule);
