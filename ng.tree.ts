@@ -52,11 +52,16 @@ export interface TreeConfig {
 	onFold?: (node?: any) => boolean;
 
 	/**
+	 * trigger on mouse right click (DilipKumar katre addded on 12 dec 2017)
+	  * @param mouse event
+	 * @param node
+	 */
+  onClick?: (node?: any) => void;
+  /**
 	 * trigger on icon or name click
 	 * @param node
 	 */
-	onClick?: (node?: any) => void;
-
+  onContextMenu?: (event: MouseEvent,node?: any) => void;
 	/**
 	 * trigger on tool button click
 	 * @param node
@@ -194,7 +199,7 @@ export interface TreeConfig {
 		<div (click)="nodeClick(n, $event)" class="ngtree_node_info_wraper">
 			<div class="{{n[treeMap.iconClass]}} ngtree_node_icon {{!(n[treeMap.iconClass])?'ngtree_folder_icon':''}}"
 				[ngClass]="{tree_icon_hide:n[treeMap.iconClass]==false}"></div>
-			<div class="ngtree_node_name {{n[treeMap.nameClass]}}">{{n[treeMap.name]}}</div>
+			<div (contextmenu)="nodeContextClick(n, $event)" class="ngtree_node_name {{n[treeMap.nameClass]}}">{{n[treeMap.name]}}</div>
 			<div class="ngtree_node_toolbar" (click)="onEdit(n, $event)" *ngIf="n[treeMap.enableTools]!=false && (treeConfig.tools||treeData.tools)">
 				<div class="{{t.iconClass}}" [attr.data-name]="t.name" *ngFor="let t of (n[treeMap.tools] || treeConfig.tools)" title="{{t.title}}"></div>
 			</div>
@@ -209,7 +214,8 @@ export interface TreeConfig {
 		[treeContext]="treeContext"
 		[isOpen]="n[treeMap.isOpen]"
 		[(treeData)]="n[treeMap.children]"></ngTree>
-</div>`
+</div>`,
+	styleUrls: [/*Right Click Pane style urls*/]
 })
 export class NgTree {
 	static DATAMAP: any = {
@@ -433,8 +439,8 @@ export class NgTree {
 		}
 	}
 
-	/**/
-	private tData: any;
+	/**/ //DilipKumar katre made this property public on 25th Nov 2017)
+	public tData: any;
 	private ngOnInit() {
 		if (!this.isSub) {
 			this.treeRoot = this.treeData;
@@ -449,7 +455,7 @@ export class NgTree {
 		/*add parent refrence to children node*/
 		if (this.treeData) {
 			/*format or filter tree datas before subtree being created*/
-			if (this.treeConfig && typeof this.treeConfig.dataFilter == "function") {
+			if (this.treeConfig && typeof this.treeConfig.dataFilter === "function") {
 				this.tData = this.treeConfig.dataFilter(this.treeData);
 			} else {
 				this.tData = this.treeData;
@@ -462,7 +468,7 @@ export class NgTree {
 	}
 
 	private ngDoCheck() {
-		if (this.treeData && this.nodeCount != this.treeData.length) {
+		if (this.treeData && this.nodeCount !== this.treeData.length) {
 			this.ngOnInit();
 		}
 	}
@@ -496,11 +502,22 @@ export class NgTree {
 
 		return false;
 	}
+  /*Dilip-On right click*/
+  private nodeContextClick(node: any, e: any) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    if (this.treeConfig && this.treeConfig.onContextMenu) {
+      this.treeConfig.onContextMenu(e, node); 
+    } 
+
+    return false;
+  }
 
 	private onEdit(node: any, e: any) {
 		e.stopPropagation();
 		if (this.treeConfig && this.treeConfig.onToolClick) {
-			this.treeConfig.onToolClick(node, e.target.dataset.name);
+			this.treeConfig.onToolClick(e, node, e.target.dataset.name);
 		}
 
 		return false;
@@ -535,7 +552,7 @@ export class NgTree {
 
 	private dragenter(e: any, node: any) {
 		e.stopPropagation();
-		if (node != this.treeContext.dragNode) {
+		if (node !== this.treeContext.dragNode) {
 			e.target.classList.add("ngtree_enter_node");
 		}
 	}
